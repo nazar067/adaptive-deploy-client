@@ -1,0 +1,27 @@
+[Unit]
+Description=AdaptiveDeploy Web Client
+After=postgresql.service adaptive-engine.service
+Requires=adaptive-engine.service
+[Service]
+User=adaptive-web
+Group=www-data
+SupplementaryGroups=adaptive-api
+WorkingDirectory=/opt/adaptive-client
+RuntimeDirectory=adaptive-web
+RuntimeDirectoryMode=0750
+Environment=NODE_ENV=production
+Environment=PUBLIC_ORIGIN=https://adaptive.bandura.monster
+ExecStart=/usr/bin/node /opt/adaptive-client/dist-server/index.js
+Restart=on-failure
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+CapabilityBoundingSet=
+UMask=0007
+[Install]
+WantedBy=multi-user.target

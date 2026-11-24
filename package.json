@@ -1,0 +1,7 @@
+{
+  "name":"adaptive-client","version":"0.1.0","private":true,"type":"module",
+  "scripts":{"build":"tsc --noEmit -p tsconfig.json && tsc -p tsconfig.server.json && vite build","start":"node dist-server/index.js","admin":"node dist-server/admin.js"},
+  "dependencies":{"express":"^5.1.0","express-rate-limit":"^8.1.0","helmet":"^8.1.0","pg":"^8.16.0","react":"^19.1.0","react-dom":"^19.1.0"},
+  "devDependencies":{"@types/express":"^5.0.0","@types/node":"^22.0.0","@types/pg":"^8.15.0","@types/react":"^19.0.0","@types/react-dom":"^19.0.0","typescript":"^5.8.0","vite":"^7.0.0"},
+  "engines":{"node":">=22.12"}
+}

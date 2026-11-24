@@ -1,0 +1,4 @@
+import {pool} from './db.js';import {hashPassword} from './auth.js';
+const login=process.argv[2];let input='';for await(const chunk of process.stdin)input+=chunk;const password=input.replace(/\r?\n$/,'');
+if(!login||!/^[A-Za-z0-9_.-]{3,50}$/.test(login)||password.length<16||password.length>128){console.error('Login 3–50 chars, password 16–128 chars');process.exit(1);}
+const c=await pool.connect();try{await c.query('BEGIN');await c.query('DELETE FROM sessions');await c.query('INSERT INTO administrator(id,login,password_hash) VALUES(1,$1,$2) ON CONFLICT(id) DO UPDATE SET login=excluded.login,password_hash=excluded.password_hash',[login,await hashPassword(password)]);await c.query('COMMIT');console.log('Administrator configured; old sessions revoked.');}catch(e){await c.query('ROLLBACK');throw e;}finally{c.release();await pool.end();}
